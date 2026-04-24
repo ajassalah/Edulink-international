@@ -52,7 +52,7 @@ export default function CourseDetailPage({ params }) {
 
       <section className="section">
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 380px', gap: '3rem', alignItems: 'start' }}>
+          <div className="course-detail-layout" style={{ display: 'grid', gridTemplateColumns: '1fr 380px', gap: '3rem', alignItems: 'start' }}>
             <div>
               <ScrollReveal>
                 <div className="card" style={{ padding: '2rem', marginBottom: '2rem' }}>
@@ -66,21 +66,25 @@ export default function CourseDetailPage({ params }) {
                 </div>
               </ScrollReveal>
 
-              {course.units && (
+              {course.units && (course.units.mandatory?.length > 0 || course.units.elective?.length > 0) && (
                 <ScrollReveal delay={100}>
                   <div className="card" style={{ padding: '2rem', marginBottom: '2rem' }}>
                     <h2 style={{ marginBottom: '1rem', fontSize: '1.5rem' }}>📚 Course Units</h2>
-                    {course.units.mandatory && (
+                    {course.units.mandatory && course.units.mandatory.length > 0 && (
                       <>
-                        <h4 style={{ color: levelColor, marginBottom: '0.5rem' }}>Mandatory Units</h4>
+                        <h4 style={{ color: levelColor, marginBottom: '0.5rem' }}>
+                          {course.faculty === 'Management' ? 'Mandatory Units' : 'Core Units'}
+                        </h4>
                         <ul style={{ paddingLeft: '1.2rem', marginBottom: '1.5rem' }}>
                           {course.units.mandatory.map((u, i) => <li key={i} style={{ padding: '4px 0', color: 'var(--text-body)' }}>{u}</li>)}
                         </ul>
                       </>
                     )}
-                    {course.units.elective && (
+                    {course.units.elective && course.units.elective.length > 0 && (
                       <>
-                        <h4 style={{ color: levelColor, marginBottom: '0.5rem' }}>Elective Units</h4>
+                        <h4 style={{ color: levelColor, marginBottom: '0.5rem' }}>
+                          {course.faculty === 'Management' ? 'Optional Units' : 'Elective Units'}
+                        </h4>
                         <ul style={{ paddingLeft: '1.2rem' }}>
                           {course.units.elective.map((u, i) => <li key={i} style={{ padding: '4px 0', color: 'var(--text-body)' }}>{u}</li>)}
                         </ul>
@@ -115,30 +119,62 @@ export default function CourseDetailPage({ params }) {
 
             <div>
               <ScrollReveal>
-                <div className="card" style={{ padding: '2rem', position: 'sticky', top: '100px' }}>
-                  <h3 style={{ marginBottom: '1.5rem' }}>Program Details</h3>
-                  {[
-                    ['🏫', 'School', course.faculty],
-                    ['📍', 'Location', course.location || 'Mount Lavinia'],
-                    ['💻', 'Learning Mode', course.mode || 'Online | Physical'],
-                    ['⏱', 'Duration', course.duration || '06 - 08 months'],
-                    ['🏅', 'Awarding Body', course.awardingBody || 'Qualifi'],
-                    ['📊', 'Credits', course.credits || '120 Credits'],
-                  ].map(([icon, label, value], i) => (
-                    <div key={i} style={{ display: 'flex', justifyContent: 'space-between', padding: '12px 0', borderBottom: '1px solid var(--border)' }}>
-                      <span style={{ color: 'var(--text-light)' }}>{icon} {label}</span>
-                      <span style={{ fontWeight: 600, textAlign: 'right', maxWidth: '55%' }}>{value}</span>
-                    </div>
-                  ))}
+                <div className="card course-detail-sidebar" style={{ padding: '2rem', position: 'sticky', top: '100px', borderTop: '4px solid var(--accent)' }}>
+                  <h3 style={{ marginBottom: '1.5rem', fontSize: '1.5rem', fontWeight: '800', color: 'var(--primary)' }}>Program Details</h3>
+                  
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    {[
+                      ['🏫', 'School', course.faculty],
+                      ['📍', 'Location', course.location || 'Mount Lavinia'],
+                      ['💻', 'Learning Mode', course.mode || 'Online'],
+                      ['⏱', 'Duration', course.duration || '06 - 08 months'],
+                      ['🏅', 'Awarding Body', course.awardingBody || 'Qualifi, OTHM, UKEE, Nqual']
+                    ].map(([icon, label, value], i) => (
+                      <div key={i} style={{ 
+                        display: 'flex', 
+                        alignItems: 'flex-start', 
+                        gap: '1rem', 
+                        padding: '1rem', 
+                        background: 'var(--off-white)', 
+                        borderRadius: '12px',
+                        border: '1px solid var(--mid-gray)',
+                        transition: 'all 0.3s ease'
+                      }}>
+                        <div style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          width: '42px',
+                          height: '42px',
+                          background: 'var(--white)',
+                          borderRadius: '10px',
+                          fontSize: '1.25rem',
+                          boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+                          flexShrink: 0
+                        }}>
+                          {icon}
+                        </div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                          <span style={{ fontSize: '0.75rem', color: 'var(--text-light)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px' }}>{label}</span>
+                          <span style={{ fontWeight: 700, color: 'var(--text-primary)', fontSize: '0.95rem', lineHeight: '1.4' }}>{value}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
 
-                  <h4 style={{ marginTop: '1.5rem', marginBottom: '0.75rem' }}>Registration Documents</h4>
-                  {['Passport Size Photo', 'Birth Certificate & NIC', 'CV', 'Education Documents (OL, AL, Other)', 'Service Letter'].map((d, i) => (
-                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '6px 0', fontSize: '0.9rem', color: 'var(--text-body)' }}>
-                      <span>📄</span> {d}
-                    </div>
-                  ))}
+                  <div style={{ marginTop: '2rem', paddingTop: '1.5rem', borderTop: '1px solid var(--mid-gray)' }}>
+                    <h4 style={{ marginBottom: '1rem', fontSize: '1.1rem', fontWeight: '700', color: 'var(--primary)' }}>Registration Documents</h4>
+                    <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                      {['Passport Size Photo', 'Birth Certificate & NIC', 'CV', 'Education Documents (OL, AL, Other)', 'Service Letter'].map((d, i) => (
+                        <li key={i} style={{ display: 'flex', alignItems: 'center', gap: '12px', fontSize: '0.9rem', color: 'var(--text-body)', fontWeight: '500' }}>
+                          <div style={{ width: '8px', height: '8px', background: 'linear-gradient(135deg, var(--accent), var(--accent-dark))', borderRadius: '50%', flexShrink: 0 }}></div>
+                          {d}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
 
-                  <div style={{ marginTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                  <div style={{ marginTop: '2.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                     <Link href="/contact" className="btn btn-primary" style={{ width: '100%', textAlign: 'center' }}>
                       Apply Now <span className="btn-icon">→</span>
                     </Link>

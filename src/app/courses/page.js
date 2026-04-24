@@ -39,7 +39,7 @@ function CoursesContent() {
   const featuredCourses = allCoursesData.filter((c) => c.featured);
 
   const getLevelColor = (level) => {
-    switch(level) {
+    switch (level) {
       case 'Undergraduate': return '#2563EB';
       case 'Postgraduate': return '#7C3AED';
       case 'Diploma': return '#0891B2';
@@ -49,7 +49,7 @@ function CoursesContent() {
   };
 
   const getFacultyIcon = (faculty) => {
-    switch(faculty) {
+    switch (faculty) {
       case 'Computing': return '💻';
       case 'Management': return '📊';
       case 'Health': return '🏥';

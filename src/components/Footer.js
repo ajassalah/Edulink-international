@@ -46,11 +46,11 @@ export default function Footer() {
           <div className="footer-col">
             <h4>Academics</h4>
             <Link href="/courses">All Programs</Link>
-            <a href="#">School of Computing</a>
-            <a href="#">School of Management</a>
-            <a href="#">School of Health</a>
-            <a href="#">School of Education</a>
-            <a href="#">Online Learning</a>
+            <Link href="/courses?faculty=Computing">School of Computing</Link>
+            <Link href="/courses?faculty=Management">School of Management</Link>
+            <Link href="/courses?faculty=Health">School of Health</Link>
+            <Link href="/courses?faculty=Education">School of Education</Link>
+            <Link href="/courses">Online Learning</Link>
           </div>
 
           {/* Contact Info */}
