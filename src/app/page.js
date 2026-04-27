@@ -91,7 +91,7 @@ export default function HomePage() {
               </Link>
             </ScrollReveal>
             <ScrollReveal delay={300}>
-              <Link href="/courses?category=Short Course" className="finder-card">
+              <Link href="/courses?category=Short Courses" className="finder-card">
                 <div className="finder-card-label">Are looking for career development</div>
                 <h3>Professional Courses</h3>
                 <div className="arrow">→</div>
@@ -118,25 +118,25 @@ export default function HomePage() {
           <div className="faculty-grid">
             {[
               {
-                icon: '💼',
+                image: '/images/courses/business.png',
                 title: 'School of Management',
                 desc: 'Offering innovative programs to develop future business leaders and managers globally.',
                 color: '#1E3A5F',
               },
               {
-                icon: '💻',
+                image: '/images/courses/it.png',
                 title: 'School of Computing',
                 desc: 'Empowering tech professionals with cutting-edge knowledge and innovative skills.',
                 color: '#2A4F7F',
               },
               {
-                icon: '🏥',
+                image: '/images/hero-campus.png',
                 title: 'School of Health',
                 desc: 'Promoting well-being through advanced healthcare and psychological expertise.',
                 color: '#1E3A5F',
               },
               {
-                icon: '📚',
+                image: '/images/about-hero.png',
                 title: 'School of Education',
                 desc: 'Shaping educators with modern teaching methods and lifelong learning principles.',
                 color: '#2A4F7F',
@@ -144,8 +144,8 @@ export default function HomePage() {
             ].map((faculty, i) => (
               <ScrollReveal key={i} delay={i * 100}>
                 <div className="faculty-card">
-                  <div className="faculty-card-image" style={{ background: `linear-gradient(135deg, ${faculty.color}, var(--primary))` }}>
-                    <span className="faculty-icon">{faculty.icon}</span>
+                  <div className="faculty-card-image">
+                    <img src={faculty.image} alt={faculty.title} />
                   </div>
                   <div className="faculty-card-body">
                     <h3>{faculty.title}</h3>
@@ -382,24 +382,27 @@ export default function HomePage() {
                 title: 'Embark on an Unforgettable Adventure Trip',
                 desc: 'Join us for an exciting outdoor adventure designed to build teamwork and leadership skills.',
                 date: 'Mar 15, 2025',
+                image: '/images/campus-life.png'
               },
               {
                 tag: 'Academic',
                 title: 'Level 8 Diploma in Strategic Management',
                 desc: 'Advance your career with our new Level 8 qualification in strategic management and leadership.',
                 date: 'Feb 28, 2025',
+                image: '/images/courses/business.png'
               },
               {
                 tag: 'Webinar',
                 title: 'Business Management Webinar Series',
                 desc: 'Expert-led sessions covering the latest trends in business management and entrepreneurship.',
                 date: 'Feb 22, 2025',
+                image: '/images/courses/marketing.png'
               },
             ].map((news, i) => (
               <ScrollReveal key={i} delay={i * 100}>
                 <div className="news-card">
                   <div className="news-card-image">
-                    <div className="news-card-date">{news.date}</div>
+                    <img src={news.image} alt={news.title} />
                   </div>
                   <div className="news-card-body">
                     <div className="news-card-tag">{news.tag}</div>

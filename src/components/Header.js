@@ -45,11 +45,11 @@ export default function Header() {
       <div className="header-top">
         <div className="container header-top-inner">
           <div className="header-top-left">
-            <a href="mailto:admissions@edulink.edu">
-              <span>✉</span> admissions@edulink.edu
+            <a href="mailto:info@edulink.edu.lk">
+              <span>✉</span> info@edulink.edu.lk
             </a>
-            <a href="tel:+94771771799">
-              <span>📞</span> +94 111 111 111
+            <a href="tel:0112589202">
+              <span>📞</span> 0112589202
             </a>
           </div>
         </div>

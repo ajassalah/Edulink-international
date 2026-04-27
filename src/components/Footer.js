@@ -50,6 +50,7 @@ export default function Footer() {
             <Link href="/courses?faculty=Management">School of Management</Link>
             <Link href="/courses?faculty=Health">School of Health</Link>
             <Link href="/courses?faculty=Education">School of Education</Link>
+            <Link href="/courses?category=Short Courses">Short Courses</Link>
             <Link href="/courses">Online Learning</Link>
           </div>
 
@@ -58,15 +59,17 @@ export default function Footer() {
             <h4>Contact Info</h4>
             <div className="footer-contact-item">
               <span className="footer-contact-icon">📍</span>
-              <span>123 University Avenue, Colombo 07, Sri Lanka</span>
+              <a href="https://maps.google.com/?q=16+Beltona+Lane,+Colombo+-+04,+Sri+Lanka" target="_blank" rel="noopener noreferrer">
+                16 Beltona Lane, Colombo - 04, Sri Lanka
+              </a>
             </div>
             <div className="footer-contact-item">
               <span className="footer-contact-icon">📞</span>
-              <span>+94 771 771 799<br />+94 771 756 292</span>
+              <a href="tel:0112589202">0112589202</a>
             </div>
             <div className="footer-contact-item">
               <span className="footer-contact-icon">✉</span>
-              <span>info@edulink.edu<br />admissions@edulink.edu</span>
+              <a href="mailto:info@edulink.edu.lk">info@edulink.edu.lk</a>
             </div>
             <div className="footer-contact-item">
               <span className="footer-contact-icon">🌍</span>

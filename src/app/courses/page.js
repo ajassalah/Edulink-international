@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import ScrollReveal from '@/components/ScrollReveal';
 import { allCoursesData } from '@/data/courses';
 
-const categories = ['All', 'Undergraduate', 'Postgraduate', 'Diploma', 'Short Course'];
+const categories = ['All', 'Undergraduate', 'Postgraduate', 'Diploma', 'Short Courses'];
 const faculties = ['All Faculties', 'Computing', 'Management', 'Health', 'Education'];
 
 function CoursesContent() {
@@ -16,8 +16,6 @@ function CoursesContent() {
   const [activeTab, setActiveTab] = useState(initialCategory);
   const [searchQuery, setSearchQuery] = useState(initialSearch);
   const [activeFaculty, setActiveFaculty] = useState(initialFaculty);
-  const [visibleCount, setVisibleCount] = useState(9);
-
   useEffect(() => {
     const q = searchParams.get('search');
     if (q !== null) setSearchQuery(q);
@@ -27,7 +25,23 @@ function CoursesContent() {
     if (c !== null) setActiveTab(c);
   }, [searchParams]);
 
-  useEffect(() => { setVisibleCount(9); }, [activeTab, searchQuery, activeFaculty]);
+  const getCourseDepartment = (course) => {
+    if (course.id === 11) return 'Cyber Security';
+    if (course.id >= 1 && course.id <= 15) return 'Information Technology';
+    if (course.id >= 16 && course.id <= 19) return 'Data Science';
+    if (course.id >= 20 && course.id <= 25) return 'Cyber Security';
+    if (course.id >= 26 && course.id <= 46) return 'Business Management';
+    if (course.id >= 47 && course.id <= 53) return 'Accounting and Finance';
+    if (course.id === 54) return 'Marketing';
+    if (course.id === 55) return 'Human Resource Management';
+    if (course.id === 56) return 'Logistics and Supply Chain Management';
+    if (course.id >= 57 && course.id <= 61) return 'Hospitality and Tourism Management';
+    if (course.id >= 62 && course.id <= 68) return 'Health and Social Care';
+    if (course.id >= 69 && course.id <= 72) return 'Psychology';
+    if (course.id === 73 || (course.id >= 75 && course.id <= 76)) return 'Early Years Education';
+    if (course.id === 74 || (course.id >= 77 && course.id <= 82)) return 'Education and Training';
+    return 'Other';
+  };
 
   const filteredCourses = allCoursesData.filter((course) => {
     const matchesCategory = activeTab === 'All' || course.level === activeTab;
@@ -36,6 +50,21 @@ function CoursesContent() {
     return matchesCategory && matchesSearch && matchesFaculty;
   });
 
+  const groupedCourses = {};
+  filteredCourses.forEach(course => {
+    const dept = getCourseDepartment(course);
+    if (!groupedCourses[dept]) groupedCourses[dept] = [];
+    groupedCourses[dept].push(course);
+  });
+
+  const departmentOrder = [
+    'Information Technology', 'Data Science', 'Cyber Security',
+    'Business Management', 'Accounting and Finance', 'Marketing',
+    'Hospitality and Tourism Management', 'Human Resource Management',
+    'Logistics and Supply Chain Management', 'Health and Social Care',
+    'Psychology', 'Early Years Education', 'Education and Training', 'Other'
+  ];
+
   const featuredCourses = allCoursesData.filter((c) => c.featured);
 
   const getLevelColor = (level) => {
@@ -43,7 +72,7 @@ function CoursesContent() {
       case 'Undergraduate': return '#2563EB';
       case 'Postgraduate': return '#7C3AED';
       case 'Diploma': return '#0891B2';
-      case 'Short Course': return '#059669';
+      case 'Short Courses': return '#059669';
       default: return 'var(--accent)';
     }
   };
@@ -105,43 +134,50 @@ function CoursesContent() {
               </p>
             </div>
           </ScrollReveal>
-          <div className="course-grid">
-            {filteredCourses.slice(0, visibleCount).map((course, i) => (
-              <ScrollReveal key={course.id} delay={(i % 3) * 100}>
-                <div className="course-card">
-                  <div className="course-card-header">
-                    <span className="course-card-level" style={{ background: getLevelColor(course.level) + '18', color: getLevelColor(course.level) }}>{course.level}</span>
-                    <h3>{course.title}</h3>
-                  </div>
-                  <div className="course-card-body">
-                    <div className="course-meta">
-                      <div className="course-meta-item">
-                        <span className="course-meta-icon">{getFacultyIcon(course.faculty)}</span>
-                        {course.faculty}
+          {departmentOrder.map(dept => {
+            const coursesInDept = groupedCourses[dept];
+            if (!coursesInDept || coursesInDept.length === 0) return null;
+            
+            return (
+              <div key={dept} style={{ marginBottom: '4rem' }}>
+                <ScrollReveal>
+                  <h2 style={{ 
+                    fontSize: '1.8rem', 
+                    marginBottom: '1.5rem', 
+                    color: 'var(--primary)',
+                    paddingBottom: '0.5rem',
+                    display: 'inline-block'
+                  }}>
+                    {dept}
+                  </h2>
+                </ScrollReveal>
+                <div className="course-grid">
+                  {coursesInDept.map((course, i) => (
+                    <ScrollReveal key={course.id} delay={(i % 3) * 100}>
+                      <div className="course-card premium-card" style={{ borderTop: `4px solid ${getLevelColor(course.level)}` }}>
+                        <div className="course-card-content">
+                          <div className="course-card-header">
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.5rem' }}>
+                              <span className="course-dept-label">{course.faculty} School</span>
+                              <span className="course-card-level-tag" style={{ background: getLevelColor(course.level), position: 'static', boxShadow: 'none' }}>{course.level}</span>
+                            </div>
+                            <h3>{course.title}</h3>
+                          </div>
+                          <div className="course-card-body">
+                            <div className="course-card-footer" style={{ marginTop: '1.5rem' }}>
+                              <Link href={`/courses/${course.slug}`} className="learn-more-btn">
+                                Explore Program <span className="arrow">→</span>
+                              </Link>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                    <Link href={`/courses/${course.slug}`} className="btn btn-outline btn-sm" style={{ width: '100%' }}>
-                      View Details <span className="btn-icon">→</span>
-                    </Link>
-                  </div>
+                    </ScrollReveal>
+                  ))}
                 </div>
-              </ScrollReveal>
-            ))}
-          </div>
-
-          {filteredCourses.length > 9 && (
-            <div className="text-center" style={{ marginTop: '2rem' }}>
-              {visibleCount < filteredCourses.length ? (
-                <button className="btn btn-outline" onClick={() => setVisibleCount(prev => prev + 9)} style={{ minWidth: '220px' }}>
-                  Show More ({filteredCourses.length - visibleCount} remaining) <span className="btn-icon">↓</span>
-                </button>
-              ) : (
-                <button className="btn btn-outline" onClick={() => { setVisibleCount(9); window.scrollTo({ top: document.querySelector('.courses-filter')?.offsetTop - 80, behavior: 'smooth' }); }} style={{ minWidth: '220px' }}>
-                  Show Less <span className="btn-icon">↑</span>
-                </button>
-              )}
-            </div>
-          )}
+              </div>
+            );
+          })}
 
           {filteredCourses.length === 0 && (
             <div className="text-center" style={{ padding: '3rem' }}>
@@ -164,21 +200,22 @@ function CoursesContent() {
           <div className="course-grid" style={{ marginTop: '2rem' }}>
             {featuredCourses.slice(0, 6).map((course, i) => (
               <ScrollReveal key={course.id} delay={i * 100}>
-                <div className="course-card">
-                  <div className="course-card-header">
-                    <span className="course-card-level" style={{ background: getLevelColor(course.level) + '18', color: getLevelColor(course.level) }}>{course.level}</span>
-                    <h3>{course.title}</h3>
-                  </div>
-                  <div className="course-card-body">
-                    <div className="course-meta">
-                      <div className="course-meta-item">
-                        <span className="course-meta-icon">{getFacultyIcon(course.faculty)}</span>
-                        {course.faculty}
+                <div className="course-card premium-card" style={{ borderTop: `4px solid ${getLevelColor(course.level)}` }}>
+                  <div className="course-card-content">
+                    <div className="course-card-header">
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.5rem' }}>
+                        <span className="course-dept-label">{course.faculty} School</span>
+                        <span className="course-card-level-tag" style={{ background: getLevelColor(course.level), position: 'static', boxShadow: 'none' }}>{course.level}</span>
+                      </div>
+                      <h3>{course.title}</h3>
+                    </div>
+                    <div className="course-card-body">
+                      <div className="course-card-footer" style={{ marginTop: '1.5rem' }}>
+                        <Link href={`/courses/${course.slug}`} className="learn-more-btn">
+                          Explore Program <span className="arrow">→</span>
+                        </Link>
                       </div>
                     </div>
-                    <Link href={`/courses/${course.slug}`} className="btn btn-primary btn-sm" style={{ width: '100%' }}>
-                      View Details <span className="btn-icon">→</span>
-                    </Link>
                   </div>
                 </div>
               </ScrollReveal>

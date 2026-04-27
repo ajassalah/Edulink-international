@@ -142,14 +142,35 @@ export default function AboutPage() {
 
           <div className="faculty-grid" style={{ marginTop: '2rem' }}>
             {[
-              { icon: '🏆', title: 'Globally Recognized', desc: 'Qualifications accredited by international awarding bodies.' },
-              { icon: '👨‍🏫', title: 'Expert Faculty', desc: 'Learn from industry professionals and experienced academics.' },
-              { icon: '🔬', title: 'Research Focused', desc: 'Emphasis on applied research and innovative thinking.' },
-              { icon: '🤝', title: 'Industry Links', desc: 'Strong partnerships with leading employers for placements.' },
+              { 
+                icon: '🏆', 
+                title: 'Globally Recognized', 
+                desc: 'Qualifications accredited by international awarding bodies.',
+                img: '/images/globally-recognized.png'
+              },
+              { 
+                icon: '👨‍🏫', 
+                title: 'Expert Faculty', 
+                desc: 'Learn from industry professionals and experienced academics.',
+                img: '/images/campus-life.png'
+              },
+              { 
+                icon: '🔬', 
+                title: 'Research Focused', 
+                desc: 'Emphasis on applied research and innovative thinking.',
+                img: '/images/about-hero.png'
+              },
+              { 
+                icon: '🤝', 
+                title: 'Industry Links', 
+                desc: 'Strong partnerships with leading employers for placements.',
+                img: '/images/events-hero.png'
+              },
             ].map((item, i) => (
               <ScrollReveal key={i} delay={i * 100}>
                 <div className="faculty-card">
                   <div className="faculty-card-image">
+                    <img src={item.img} alt={item.title} />
                     <span className="faculty-icon">{item.icon}</span>
                   </div>
                   <div className="faculty-card-body">

@@ -26,13 +26,13 @@ export default function CourseDetailPage({ params }) {
 
   const levelColor = {
     'Undergraduate': '#2563EB', 'Postgraduate': '#7C3AED',
-    'Diploma': '#0891B2', 'Short Course': '#059669'
+    'Diploma': '#0891B2', 'Short Courses': '#059669'
   }[course.level] || '#2563EB';
 
   return (
     <>
       <section className="hero-page" style={{ minHeight: '45vh' }}>
-        <div className="hero-bg"><img src="/images/campus-life.png" alt={course.title} /></div>
+        <div className="hero-bg"><img src={course.image} alt={course.title} /></div>
         <div className="hero-overlay"></div>
         <div className="container">
           <div className="hero-content" style={{ animation: 'fadeInUp 0.8s ease forwards' }}>
@@ -126,7 +126,7 @@ export default function CourseDetailPage({ params }) {
                     {[
                       ['🏫', 'School', course.faculty],
                       ['📍', 'Location', course.location || 'Mount Lavinia'],
-                      ['💻', 'Learning Mode', course.mode || 'Online'],
+                      ['💻', 'Learning Mode', course.mode || 'Online Only'],
                       ['⏱', 'Duration', course.duration || '06 - 08 months'],
                       ['🏅', 'Awarding Body', course.awardingBody || 'Qualifi, OTHM, UKEE, Nqual']
                     ].map(([icon, label, value], i) => (
@@ -201,14 +201,15 @@ export default function CourseDetailPage({ params }) {
             <div className="course-grid" style={{ marginTop: '2rem' }}>
               {relatedCourses.map((c, i) => (
                 <ScrollReveal key={c.id} delay={i * 100}>
-                  <div className="course-card">
-                    <div className="course-card-header">
-                      <span className="course-card-level">{c.level}</span>
+                  <div className="related-program-card">
+                    <div className="rp-card-top">
+                      <div className="rp-school-tag">{c.faculty} SCHOOL</div>
+                      <div className="rp-level-badge">{c.level}</div>
                       <h3>{c.title}</h3>
                     </div>
-                    <div className="course-card-body">
-                      <Link href={`/courses/${c.slug}`} className="btn btn-outline btn-sm" style={{ width: '100%' }}>
-                        View Details <span className="btn-icon">→</span>
+                    <div className="rp-card-bottom">
+                      <Link href={`/courses/${c.slug}`} className="rp-explore-btn">
+                        Explore Program <span>→</span>
                       </Link>
                     </div>
                   </div>

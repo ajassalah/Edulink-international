@@ -52,24 +52,21 @@ export default function ContactPage() {
               <div className="contact-card">
                 <div className="contact-card-icon">📞</div>
                 <h4>Call Us</h4>
-                <p>+94 771 771 799</p>
-                <p style={{ marginTop: '-0.5rem' }}>+94 771 756 292</p>
+                <p>0112589202</p>
               </div>
             </ScrollReveal>
             <ScrollReveal delay={100}>
               <div className="contact-card">
                 <div className="contact-card-icon">✉</div>
                 <h4>Email Us</h4>
-                <p>info@edulink.edu</p>
-                <p style={{ marginTop: '-0.5rem' }}>admissions@edulink.edu</p>
+                <p>info@edulink.edu.lk</p>
               </div>
             </ScrollReveal>
             <ScrollReveal delay={200}>
               <div className="contact-card">
                 <div className="contact-card-icon">📍</div>
                 <h4>Visit Us</h4>
-                <p>123 University Avenue,</p>
-                <p style={{ marginTop: '-0.5rem' }}>Colombo 07, Sri Lanka</p>
+                <p>16 Beltona Lane, Colombo - 04, Sri Lanka</p>
               </div>
             </ScrollReveal>
           </div>
@@ -182,7 +179,7 @@ export default function ContactPage() {
             <ScrollReveal>
               <div className="contact-map">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.798467128761!2d79.8612!3d6.9147!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwNTQnNTMuMCJOIDc5wrA1MScyMC4wIkU!5e0!3m2!1sen!2slk!4v1234567890"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.916849880856!2d79.85698777576579!3d6.899661418706346!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae259654117b3cf%3A0x6d9f945763b655f4!2s16%20Beltona%20Ln%2C%20Colombo!5e0!3m2!1sen!2slk!4v1714210000000!5m2!1sen!2slk"
                   allowFullScreen=""
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"

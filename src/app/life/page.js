@@ -1,8 +1,21 @@
 'use client';
+import { useState } from 'react';
 import Link from 'next/link';
 import ScrollReveal from '@/components/ScrollReveal';
 
 export default function LifePage() {
+  const [showAllFacilities, setShowAllFacilities] = useState(false);
+
+  const facilities = [
+    { icon: '📚', title: 'Modern Library', desc: 'Digital and physical resources available 24/7.' },
+    { icon: '💻', title: 'Computer Labs', desc: 'Latest hardware and software for hands-on learning.' },
+    { icon: '🏋', title: 'Sports Complex', desc: 'Indoor and outdoor facilities for all sports.' },
+    { icon: '🍽', title: 'Student Cafeteria', desc: 'Healthy meals and snacks for busy students.' },
+    { icon: '🏠', title: 'Student Lounge', desc: 'Comfortable spaces for relaxation and socializing.' },
+    { icon: '🅿️', title: 'Parking Facility', desc: 'Secure parking for students and staff.' },
+    { icon: '📡', title: 'Free Wi-Fi', desc: 'High-speed internet across the entire campus.' },
+    { icon: '🎤', title: 'Auditorium', desc: '500-seat auditorium for events and seminars.' },
+  ];
   return (
     <>
       {/* ==================== HERO ==================== */}
@@ -160,16 +173,7 @@ export default function LifePage() {
           </ScrollReveal>
 
           <div className="facilities-grid">
-            {[
-              { icon: '📚', title: 'Modern Library', desc: 'Digital and physical resources available 24/7.' },
-              { icon: '💻', title: 'Computer Labs', desc: 'Latest hardware and software for hands-on learning.' },
-              { icon: '🏋', title: 'Sports Complex', desc: 'Indoor and outdoor facilities for all sports.' },
-              { icon: '🍽', title: 'Student Cafeteria', desc: 'Healthy meals and snacks for busy students.' },
-              { icon: '🏠', title: 'Student Lounge', desc: 'Comfortable spaces for relaxation and socializing.' },
-              { icon: '🅿️', title: 'Parking Facility', desc: 'Secure parking for students and staff.' },
-              { icon: '📡', title: 'Free Wi-Fi', desc: 'High-speed internet across the entire campus.' },
-              { icon: '🎤', title: 'Auditorium', desc: '500-seat auditorium for events and seminars.' },
-            ].map((facility, i) => (
+            {facilities.slice(0, showAllFacilities ? facilities.length : 4).map((facility, i) => (
               <ScrollReveal key={i} delay={i * 80}>
                 <div className="facility-item">
                   <div className="facility-icon">{facility.icon}</div>
@@ -178,6 +182,16 @@ export default function LifePage() {
                 </div>
               </ScrollReveal>
             ))}
+          </div>
+
+          <div className="text-center" style={{ marginTop: '3rem' }}>
+            <button 
+              className="btn btn-outline"
+              onClick={() => setShowAllFacilities(!showAllFacilities)}
+            >
+              {showAllFacilities ? 'Show Less' : 'Show All Facilities'} 
+              <span className="btn-icon" style={{ transform: showAllFacilities ? 'rotate(-90deg)' : 'rotate(90deg)', display: 'inline-block', marginLeft: '8px' }}>→</span>
+            </button>
           </div>
         </div>
       </section>
