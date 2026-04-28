@@ -125,7 +125,6 @@ export default function CourseDetailPage({ params }) {
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                     {[
                       ['🏫', 'School', course.faculty],
-                      ['📍', 'Location', course.location || 'Mount Lavinia'],
                       ['💻', 'Learning Mode', course.mode || 'Online Only'],
                       ['⏱', 'Duration', course.duration || '06 - 08 months'],
                       ['🏅', 'Awarding Body', course.awardingBody || 'Qualifi, OTHM, UKEE, Nqual']

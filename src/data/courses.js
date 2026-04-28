@@ -1,4 +1,4 @@
-const base = { location:'Mount Lavinia', mode:'Online Only', duration:'06 - 08 months', awardingBody:'Qualifi, OTHM, UKEE, Nqual', credits:'120 Credits',
+const base = { mode:'Online Only', duration:'06 - 08 months', awardingBody:'Qualifi, OTHM, UKEE, Nqual', credits:'120 Credits',
   accreditations:['Regulated by Ofqual','Approved by WES','Member of IAU'],
   entryRequirements:['Demonstrated ability and possess qualifications at the previous level','Spent time in an organisational role and shown capability','Seeking further professional development'],
   learningOutcomes:['Understand and apply principles in a professional environment','Improve employability through theory and practice','Analyse problem solving techniques','Work independently and as part of a team','Manage personal development and growth'],
@@ -28,7 +28,6 @@ function c(id,title,slug,level,faculty,extra={}) {
     image: extra.image || getDeptImage(id),
     featured:!!extra.featured,
     description:extra.desc||`This program provides a comprehensive pathway for learners seeking to develop knowledge and skills in ${faculty.toLowerCase()}. The qualification is designed to equip students with industry-relevant competencies.`,
-    location:extra.location||base.location,
     mode:extra.mode||base.mode,
     duration:extra.duration||base.duration,
     awardingBody:extra.ab||base.awardingBody,

@@ -281,24 +281,9 @@ export default function HomePage() {
               opportunities for students both locally and internationally.
             </p>
           </ScrollReveal>
-          <div className="partners-logos" style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem', padding: '1.5rem 0', flexWrap: 'wrap' }}>
+          <div className="partners-logos">
             {['Qualifi', 'OTHM', 'UKEE', 'Nqual'].map((partner, i) => (
-              <div key={i} style={{
-                background: 'var(--white)',
-                padding: '0.8rem 1.8rem',
-                borderRadius: '8px',
-                boxShadow: '0 4px 15px rgba(0,0,0,0.05)',
-                fontSize: '1.1rem',
-                fontWeight: '700',
-                color: 'var(--primary)',
-                border: '1px solid var(--border)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                minWidth: '140px',
-                textTransform: 'uppercase',
-                letterSpacing: '0.5px'
-              }}>
+              <div key={i} className="partner-badge">
                 {partner}
               </div>
             ))}

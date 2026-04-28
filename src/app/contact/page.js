@@ -8,16 +8,42 @@ export default function ContactPage() {
     name: '', email: '', phone: '', category: '', message: '',
   });
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 4000);
-    setFormData({ name: '', email: '', phone: '', category: '', message: '' });
+    setIsSubmitting(true);
+    setSubmitError('');
+    setSubmitted(false);
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to send message.');
+      }
+
+      setSubmitted(true);
+      setFormData({ name: '', email: '', phone: '', category: '', message: '' });
+      setTimeout(() => setSubmitted(false), 4000);
+    } catch (error) {
+      setSubmitError(error.message || 'Unable to send your message right now.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -89,6 +115,21 @@ export default function ContactPage() {
                     fontSize: '0.9rem',
                   }}>
                     ✓ Thank you! Your message has been sent successfully.
+                  </div>
+                )}
+
+                {submitError && (
+                  <div style={{
+                    background: 'rgba(229, 62, 62, 0.08)',
+                    border: '1px solid var(--danger)',
+                    borderRadius: 'var(--radius-md)',
+                    padding: '1rem 1.5rem',
+                    marginBottom: '1.5rem',
+                    color: 'var(--danger)',
+                    fontWeight: 600,
+                    fontSize: '0.9rem',
+                  }}>
+                    {submitError}
                   </div>
                 )}
 
@@ -169,8 +210,8 @@ export default function ContactPage() {
                     ></textarea>
                   </div>
 
-                  <button type="submit" className="btn btn-primary btn-lg" style={{ width: '100%' }}>
-                    Send Message <span className="btn-icon">→</span>
+                  <button type="submit" className="btn btn-primary btn-lg" style={{ width: '100%' }} disabled={isSubmitting}>
+                    {isSubmitting ? 'Sending...' : 'Send Message'} <span className="btn-icon">→</span>
                   </button>
                 </form>
               </div>
