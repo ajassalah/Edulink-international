@@ -1,4 +1,4 @@
-name: Deploy to CyberPanel FTP
+name: Deploy to CyberPanel VPS
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   deploy:
-    name: Build and upload
+    name: Build, upload, and restart
     runs-on: ubuntu-latest
 
     steps:
@@ -27,20 +27,28 @@ jobs:
       - name: Build Next.js app
         run: npm run build
 
-      - name: Upload files by FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+      - name: Upload files by SSH
+        uses: easingthemes/ssh-deploy@v5.1.0
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          REMOTE_HOST: ${{ secrets.SSH_HOST }}
+          REMOTE_USER: ${{ secrets.SSH_USER }}
+          REMOTE_PORT: ${{ secrets.SSH_PORT }}
+          SOURCE: ./
+          TARGET: ${{ secrets.SSH_TARGET_DIR }}
+          ARGS: -rlgoDzvc -i --delete
+          EXCLUDE: /.git/, /.github/, /node_modules/, /.next/, /.env, /.env.local, /.env.*.local
+
+      - name: Install, build, and restart on server
+        uses: appleboy/ssh-action@v1.0.3
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftp
-          local-dir: ./
-          server-dir: ${{ secrets.FTP_SERVER_DIR }}
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/.github/**
-            **/node_modules/**
-            .env
-            .env.local
-            .env.*.local
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd "${{ secrets.SSH_TARGET_DIR }}"
+            npm ci
+            npm run build
+            pm2 describe edulink >/dev/null 2>&1 && pm2 restart edulink || pm2 start npm --name edulink -- start
+            pm2 save
