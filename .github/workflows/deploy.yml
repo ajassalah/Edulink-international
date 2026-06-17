@@ -27,28 +27,69 @@ jobs:
       - name: Build Next.js app
         run: npm run build
 
-      - name: Upload files by SSH
-        uses: easingthemes/ssh-deploy@v5.1.0
+      - name: Configure SSH key
+        shell: bash
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          REMOTE_HOST: ${{ secrets.SSH_HOST }}
-          REMOTE_USER: ${{ secrets.SSH_USER }}
-          REMOTE_PORT: ${{ secrets.SSH_PORT }}
-          SOURCE: ./
-          TARGET: ${{ secrets.SSH_TARGET_DIR }}
-          ARGS: -rlgoDzvc -i --delete
-          EXCLUDE: /.git/, /.github/, /node_modules/, /.next/, /.env, /.env.local, /.env.*.local
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+
+      - name: Check SSH connection
+        shell: bash
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+        run: |
+          nc -vz -w 15 "$SSH_HOST" "$SSH_PORT"
+          ssh \
+            -i ~/.ssh/deploy_key \
+            -p "$SSH_PORT" \
+            -o BatchMode=yes \
+            -o ConnectTimeout=20 \
+            -o StrictHostKeyChecking=accept-new \
+            "$SSH_USER@$SSH_HOST" \
+            "echo ssh-ok"
+
+      - name: Upload files by rsync
+        shell: bash
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+          SSH_TARGET_DIR: ${{ secrets.SSH_TARGET_DIR }}
+        run: |
+          rsync ./ "$SSH_USER@$SSH_HOST:$SSH_TARGET_DIR/" \
+            --rsh "ssh -i ~/.ssh/deploy_key -p $SSH_PORT -o StrictHostKeyChecking=accept-new" \
+            --recursive \
+            --exclude=/.git/ \
+            --exclude=/.github/ \
+            --exclude=/node_modules/ \
+            --exclude=/.next/ \
+            --exclude=/.env \
+            --exclude=/.env.local \
+            --exclude=/.env.*.local \
+            -rlgoDzvc -i --delete
 
       - name: Install, build, and restart on server
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.SSH_PORT }}
-          script: |
-            cd "${{ secrets.SSH_TARGET_DIR }}"
-            npm ci
-            npm run build
-            pm2 describe edulink >/dev/null 2>&1 && pm2 restart edulink || pm2 start npm --name edulink -- start
-            pm2 save
+        shell: bash
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+          SSH_TARGET_DIR: ${{ secrets.SSH_TARGET_DIR }}
+        run: |
+          ssh \
+            -i ~/.ssh/deploy_key \
+            -p "$SSH_PORT" \
+            -o BatchMode=yes \
+            -o ConnectTimeout=20 \
+            -o StrictHostKeyChecking=accept-new \
+            "$SSH_USER@$SSH_HOST" \
+            "cd \"$SSH_TARGET_DIR\" && \
+            npm ci && \
+            npm run build && \
+            (pm2 describe edulink >/dev/null 2>&1 && pm2 restart edulink || pm2 start npm --name edulink -- start) && \
+            pm2 save"
