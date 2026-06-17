@@ -32,10 +32,10 @@ export default function Header() {
 
   const navLinks = [
     { href: '/', label: 'Home' },
-    { href: '/about', label: 'About Us' },
+    { href: '/about-edulink', label: 'About Us' },
     { href: '/courses', label: 'Courses' },
-    { href: '/life', label: 'Life @ EduLink' },
-    { href: '/events', label: 'News & Events' },
+    { href: '/life-at-edulink', label: 'Life @ EduLink' },
+    { href: '/edulink-news-events', label: 'News & Events' },
     { href: '/contact', label: 'Contact Us' },
   ];
 

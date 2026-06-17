@@ -83,10 +83,10 @@ export default function Footer() {
           <div className="footer-col">
             <h4>Quick Links</h4>
             <Link href="/">Home</Link>
-            <Link href="/about">About Us</Link>
+            <Link href="/about-edulink">About Us</Link>
             <Link href="/courses">Courses</Link>
-            <Link href="/life">Life @ EduLink</Link>
-            <Link href="/events">News & Events</Link>
+            <Link href="/life-at-edulink">Life @ EduLink</Link>
+            <Link href="/edulink-news-events">News & Events</Link>
             <Link href="/contact">Contact Us</Link>
           </div>
 

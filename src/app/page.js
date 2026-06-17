@@ -190,7 +190,7 @@ export default function HomePage() {
                     </div>
                   ))}
                 </div>
-                <Link href="/about" className="btn btn-dark" style={{ marginTop: '1.5rem' }}>
+                <Link href="/about-edulink" className="btn btn-dark" style={{ marginTop: '1.5rem' }}>
                   Discover More <span className="btn-icon">→</span>
                 </Link>
               </div>
@@ -261,7 +261,7 @@ export default function HomePage() {
                     </div>
                   ))}
                 </div>
-                <Link href="/about" className="btn btn-outline" style={{ marginTop: '1.5rem' }}>
+                <Link href="/about-edulink" className="btn btn-outline" style={{ marginTop: '1.5rem' }}>
                   About Us <span className="btn-icon">→</span>
                 </Link>
               </div>
@@ -300,7 +300,7 @@ export default function HomePage() {
                 <span className="section-label">Testimonials</span>
                 <h2 className="section-title">Hear From Our Students & Educators</h2>
               </div>
-              <Link href="/about" className="btn btn-outline btn-sm">
+              <Link href="/about-edulink" className="btn btn-outline btn-sm">
                 View All <span className="btn-icon">→</span>
               </Link>
             </div>
@@ -354,7 +354,7 @@ export default function HomePage() {
                 <span className="section-label">Latest Updates</span>
                 <h2 className="section-title">News & Events @ EduLink</h2>
               </div>
-              <Link href="/events" className="btn btn-outline btn-sm">
+              <Link href="/edulink-news-events" className="btn btn-outline btn-sm">
                 View All <span className="btn-icon">→</span>
               </Link>
             </div>
@@ -393,7 +393,7 @@ export default function HomePage() {
                     <div className="news-card-tag">{news.tag}</div>
                     <h3>{news.title}</h3>
                     <p>{news.desc}</p>
-                    <Link href="/events" className="news-card-link">
+                    <Link href="/edulink-news-events" className="news-card-link">
                       Read More <span>→</span>
                     </Link>
                   </div>
