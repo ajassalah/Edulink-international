@@ -48,8 +48,8 @@ export default function Header() {
             <a href="mailto:info@edulink.edu.lk">
               <span>✉</span> info@edulink.edu.lk
             </a>
-            <a href="tel:0112589202">
-              <span>📞</span> 0112589202
+            <a href="tel:0719921711">
+              <span>📞</span> 0719921711
             </a>
           </div>
         </div>

@@ -117,7 +117,7 @@ export default function Footer() {
             </div>
             <div className="footer-contact-item">
               <span className="footer-contact-icon">📞</span>
-              <a href="tel:0112589202">0112589202</a>
+              <a href="tel:0719921711">0719921711</a>
             </div>
             <div className="footer-contact-item">
               <span className="footer-contact-icon">✉</span>
@@ -132,7 +132,7 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="footer-bottom">
-          <p>© 2025 EduLink International Campus. All Rights Reserved.</p>
+          <p>© 2026 EduLink International Campus. All Rights Reserved.</p>
           <div className="footer-bottom-links">
             <a href="#">Terms of Service</a>
             <a href="#">Privacy Policy</a>

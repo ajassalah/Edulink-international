@@ -17,6 +17,11 @@ export const metadata = {
   },
   description: 'EduLink International Campus offers world-class education with diverse faculties in Computing, Management, Health, and Education. Join us to shape your future with globally recognized qualifications.',
   keywords: ['EduLink International Campus', 'Sri Lanka private campus', 'UK qualifications Sri Lanka', 'online diplomas', 'business management courses', 'computing courses', 'health and social care courses', 'education and training courses'],
+  icons: {
+    icon: '/images/Edulink%20Logo-02.png',
+    shortcut: '/images/Edulink%20Logo-02.png',
+    apple: '/images/Edulink%20Logo-02.png',
+  },
   openGraph: {
     type: 'website',
     locale: 'en_LK',
