@@ -49,7 +49,7 @@ export default function HomePage() {
                 <div className="hero-stat-label">Global Alumni</div>
               </div>
               <div>
-                <div className="hero-stat-number">50+</div>
+                <div className="hero-stat-number">40+</div>
                 <div className="hero-stat-label">Programs</div>
               </div>
               <div>

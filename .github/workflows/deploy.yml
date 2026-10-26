@@ -3,7 +3,7 @@ name: Deploy to CyberPanel VPS
 on:
   push:
     branches:
-      - main
+      - mainn
   workflow_dispatch:
 
 jobs:
