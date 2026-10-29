@@ -65,7 +65,7 @@ export default function RootLayout({ children }) {
     url: siteUrl,
     logo: `${siteUrl}/images/Edulink%20Logo-02.png`,
     email: 'info@edulink.edu.lk',
-    telephone: '0112589202',
+    telephone: '0719921711',
     address: {
       '@type': 'PostalAddress',
       streetAddress: '6 Glen Aber Road',

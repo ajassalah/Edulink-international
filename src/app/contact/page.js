@@ -94,7 +94,7 @@ export default function ContactPage() {
               <div className="contact-card">
                 <div className="contact-card-icon">📞</div>
                 <h4>Call Us</h4>
-                <p>0719921711</p>
+                <p>+94 71 992 1711</p>
               </div>
             </ScrollReveal>
             <ScrollReveal delay={100}>
